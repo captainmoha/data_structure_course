@@ -1,4 +1,4 @@
-/*swapping two integers by value*/
+/*get array of ints from user and then print the elements and their count*/
 
 #include <iostream>
 
