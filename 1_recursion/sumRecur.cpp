@@ -1,3 +1,4 @@
+/*summation using recursion*/
 #include <iostream>
 using namespace std;
  
