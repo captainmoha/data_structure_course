@@ -1,3 +1,4 @@
+/* factorial using loops */
 #include <iostream>
 using namespace std;
 
