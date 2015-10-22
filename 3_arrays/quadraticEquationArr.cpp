@@ -15,7 +15,7 @@ double* quadEqn(double a, double b, double c) {
 	    return values;
 	}
 	else {
-	    return 0;
+	    return -1;
 	    
 	}
 }
