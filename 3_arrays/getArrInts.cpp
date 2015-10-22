@@ -22,7 +22,7 @@ int main() {
 void printElts(int* arr, int arrLength) {
 	cout << endl << "Elements of the array are: " << endl << "---------------------------------------" << endl;
 	int counter = 0;
-	for (int i = 0; i < arrLength; i ++) {
+	for (int i = 0; i < arrLength; i++) {
 		int currentElt = *(arr + i);
 		cout << "elment at index " << i << " is " << currentElt << endl;
 		counter ++;
