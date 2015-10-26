@@ -15,6 +15,7 @@ double* quadEqn(double a, double b, double c) {
 	    return values;
 	}
 	else {
+		// TODO deal with negative square roots
 	    return NULL;
 	    
 	}
