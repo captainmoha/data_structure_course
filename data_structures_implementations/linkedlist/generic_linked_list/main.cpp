@@ -21,6 +21,7 @@ void chooseType() {
 	std::cout << "Enter ( d ) to use doubles.\n";
 	std::cout << "Enter ( c ) to use chars.\n";
 	std::cout << "Enter ( s ) to use strings.\n";
+	std::cout << "Enter ( e ) to exit the program.\n";
 	std::cout << "\n\nEnter choice here : ";
 	std::cin >> ch;
 	switch (ch) {
@@ -42,7 +43,11 @@ void chooseType() {
 				break;
 			}
 			case 's': {
-				interface<string>();
+				interface<std::string>();
+				break;
+			}
+			case 'e': {
+				break;
 			}
 			default: {
 				std::cout << "Enter a valid choice!\n";

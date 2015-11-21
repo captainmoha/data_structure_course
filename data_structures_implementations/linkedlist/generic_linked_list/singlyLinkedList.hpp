@@ -1,10 +1,3 @@
-void wait(int seconds) 
-{ 
-    int endwait; 
-    endwait = clock() + seconds * CLOCKS_PER_SEC ; 
-    while (clock() < endwait){} 
-} 
-
 template <class T>
 struct node
 {
@@ -36,7 +29,16 @@ class linkedList {
 		~linkedList();	
 };
 
+
+void wait(int seconds) 
+{ 	/*this function is used as a sleep function uses time.h*/
+    int endwait; 
+    endwait = clock() + seconds * CLOCKS_PER_SEC ; 
+    while (clock() < endwait){} 
+} 
+
 void displayMenu() {
+	/* displays the menu to interact with the list */
 	std::cout << "*******************************************************************************************************"<< std::endl << std::endl;
 	std::cout << "******************************Welcome to the Singly LinkedList interface!******************************"<< std::endl << std::endl;
 	std::cout << "*******************************************************************************************************"<< std::endl << std::endl;
@@ -58,6 +60,7 @@ void displayMenu() {
 
 template <class T>
 void interface() {
+	/* handles the interface and deals with user input */
 	linkedList<T> List;
 
 	char choice;
@@ -189,9 +192,8 @@ void interface() {
 	
 }
 
-#include <iostream>
 
-using namespace std;
+
 // constructor initializes head to null
 template <class T>
 linkedList<T>::linkedList()
@@ -382,7 +384,7 @@ void linkedList<T>::swapTwoAdjacent(T data1, T data2) {
 		}
 
 	}
-	cout << "Swap not possible! " << endl;
+	std::cout << "Swap not possible! " << std::endl;
 	wait(2);
 	
 }
@@ -509,13 +511,13 @@ template <class T>
 void linkedList<T>::delNode(int n) {
 
 	if (head == NULL) {
-		std::cout << "List is empty!" << endl;
+		std::cout << "List is empty!" << std::endl;
 		wait(2);
 	}
 
 	else if (n == 1) {
 		head = head->next;
-		std::cout << endl << n << " was deleted" << endl;
+		std::cout << std::endl << n << " was deleted" << std::endl;
 		
 	}
 
@@ -534,10 +536,10 @@ void linkedList<T>::delNode(int n) {
 
 		if (counter == n && temp2 != NULL) {
 			temp1->next = temp2->next;
-			std::cout << "Node number " << n << " was deleted" << endl;
+			std::cout << "Node number " << n << " was deleted" << std::endl;
 		}
 		else {
-			std::cout << "No node " << n << endl;
+			std::cout << "No node " << n << std::endl;
 			wait(2); 
 		}
 
@@ -557,10 +559,10 @@ void linkedList<T>::delAfter(T data) {
 	}
 
 	if (temp2 == NULL) {
-		cout << "There is nothing after " << temp1->data << endl;
+		std::cout << "There is nothing after " << temp1->data << std::endl;
 	}
 	else {
-		cout << "No node that contains " << data << " was found " << endl;
+		std::cout << "No node that contains " << data << " was found " << std::endl;
 	}
 	
 	wait(2);  
