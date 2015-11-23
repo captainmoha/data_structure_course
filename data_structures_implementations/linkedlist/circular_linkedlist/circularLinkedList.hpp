@@ -218,9 +218,9 @@ node<T>* linkedList<T>::createNode(T data)
 template <class T>
 void linkedList<T>::append(T data)
 {
-	node<T> *temp, *nNode;
+	node<T> *nNode;
 	nNode = createNode(data);
-	if (head == NULL && tail == NULL) {
+	if (head == NULL) {
 		head = nNode;
 		tail = head;
 		tail->next = head;
@@ -229,7 +229,7 @@ void linkedList<T>::append(T data)
 	else {
 		tail->next = nNode;
 		tail = nNode;
-		nNode->next = head;
+		tail->next = head;
 	}
 }
 
@@ -237,15 +237,15 @@ template <class T>
 void linkedList<T>::display()
 {
 	// if the list is empty
-	if (head == NULL && tail == NULL) {
+	if (head == NULL) {
 		std::cout << "No nodes added yet!" << std::endl;
 	}
 
 	else {
-		// create a temp variable to hold the heads
+		// create a temp variable to hold the head and a variable to be a step back
 		node<T>* temp = head;
 		node<T>* prev = NULL;
-		// as long as we haven't reached the end of the list
+		// as long as we haven't seen the tail
 		while (prev != tail) {
 			// print current element
 			std::cout << temp->data << " ";
@@ -283,14 +283,13 @@ int linkedList<T>::count()
 template <class T>
 void linkedList<T>::del(T n) {
 	bool isFound = false;
-	if (head == NULL && tail == NULL) {
+	if (head == NULL) {
 		std::cout << "No elements are in the list " << std::endl;
 		wait(2);
 	}
 
-	else if (tail->next == head) {
+	else if (head->next == head && head->data == n) {
 		head = NULL;
-		tail = NULL;
 		std::cout << std::endl << n << " was deleted" << std::endl;
 		isFound = true;
 		wait(2);
@@ -300,17 +299,20 @@ void linkedList<T>::del(T n) {
 		node<T> *temp1, *temp2;
 		
 
-		for (temp1 = head, temp2 = temp1->next; temp2 != NULL;  temp1 = temp1->next, temp2 = temp1->next) {
+		for (temp1 = head, temp2 = temp1->next; temp2 != head;  temp1 = temp1->next, temp2 = temp1->next) {
 			if (temp1->data == n) {
-				
+				std::cout << "in if\n";
 				head = temp2;
+				tail->next = head;
 				std::cout << std::endl << n << " was deleted" << std::endl;
 				isFound = true;
 				wait(2);
 				break;
 			}
-			else if (temp2->data == n) {
-				temp1->next = temp2->next;
+			else if (temp2->data == n && temp2->next == head) {
+				std::cout << "in else\n";
+				temp1->next = head;
+				tail = temp1;
 				std::cout << std::endl << n << " was deleted" << std::endl;
 				isFound = true;
 				wait(2);
