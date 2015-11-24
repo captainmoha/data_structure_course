@@ -285,99 +285,75 @@ int linkedList<T>::count()
 
 template <class T>
 void linkedList<T>::del(T n) {
-	node<T> *temp, *prev, *dNode;
-  if(head == NULL)
-  {
-    std::cout << "List is empty" << std::endl;
-    return;
-  }
-  else {
-    if(head->data == n) {
-      dNode = head;
-      if (head == tail) {
-        head = tail = NULL;
-      }
+	
+	bool isFound = false;
+	node<T> *dNode;    // node to store the node to be deleted
+	// list is empty
+	if (head == NULL) { 
+		std::cout << "No elements are in the list " << std::endl;
+		wait(2);
+	}
+	
+	// list is not empty
+	else {
+		node<T> *temp, *prev;	// temp will be one step ahead of prev
 
-      else {
-        head = head->next;
-        tail->next = head;
-      }
-    }
+		// the list has only one node and it's the one to be deleted
+		if (head->data == n && head == tail) {
+			dNode = head;
+			head = tail = NULL;
+			isFound = true;
+		}
 
-    else if (tail->data == n) {
-      temp = head;
-      while(temp != tail) {
-        prev = temp;
-        temp = temp->next;
-      }
-      dNode = tail;
-      tail = prev;
-      tail->next = head;
-    }
+		// the node to be deleted is the first one
+		else if (head->data == n && head != tail) {
+			dNode = head;
+			head = head->next;
+			tail->next = head;
+			isFound = true;
+		}
+		// the node to be deleted is the last one
+		else if (tail->data == n) {
+			dNode = tail;
+			temp = head;
+			while (temp != tail) {
+				prev = temp;
+				temp = temp->next;
+			}
+			tail = prev;
+			tail->next = head;
+			isFound = true;
+		}
 
-    else {
-      prev = temp = head;
-      while((temp->data != n) && (temp != tail)) {
-        prev = temp;
-        temp = temp->next;
-      }
-      if (temp->data == n) {
-        dNode = temp;
-        prev->next = temp->next;
-        std::cout << "The node that contains " << temp->data << " was deleted" << std::endl;
-      }
-      else {
-        std::cout << "No node that contains " << temp->data  << " was found" << std::endl;
-        return;
-      }
-    }
-  }
+		// the node to be deleted is between the first and last nodes
+		else {
+			prev = NULL;
+			temp = head;
 
-  delete dNode;
-	// bool isFound = false;
-	// if (head == NULL) {
-	// 	std::cout << "No elements are in the list " << std::endl;
-	// 	wait(2);
-	// }
+			while (temp != tail && temp->data != n) {
+				prev = temp;
+				temp = temp->next;
+			}
 
-	// else if (head->next == head && head->data == n) {
-	// 	head = NULL;
-	// 	std::cout << std::endl << n << " was deleted" << std::endl;
-	// 	isFound = true;
-	// 	wait(2);
-	// }
+			if (temp->data == n) {
+				dNode = temp;
+				prev->next = temp->next;
+				isFound = true;
+			}
 
-	// else {
-	// 	node<T> *temp1, *temp2;
-		
+		}
+	}
 
-	// 	for (temp1 = head, temp2 = temp1->next; temp2 != head;  temp1 = temp1->next, temp2 = temp1->next) {
-	// 		if (temp1->data == n) {
-	// 			std::cout << "in if\n";
-	// 			head = temp2;
-	// 			tail->next = head;
-	// 			std::cout << std::endl << n << " was deleted" << std::endl;
-	// 			isFound = true;
-	// 			wait(2);
-	// 			break;
-	// 		}
-	// 		else if (temp2->data == n && temp2->next == head) {
-	// 			std::cout << "in else\n";
-	// 			temp1->next = head;
-	// 			tail = temp1;
-	// 			std::cout << std::endl << n << " was deleted" << std::endl;
-	// 			isFound = true;
-	// 			wait(2);
-	// 			break;
-	// 		}
-
-	// 	}
-	// }
-
-	// if (!isFound) {
-	// 	std::cout << "No element " << n << " exists in the list!" << std::endl;
-	// 	wait(2);
-	// }
+	
+	if (!isFound) {
+		std::cout << "No element " << n << " exists in the list!" << std::endl;
+		wait(2);
+	}
+	else {
+		std::cout << std::endl << n << " was deleted" << std::endl;
+		wait(2);
+		delete dNode;
+	}
 		
 }
 
