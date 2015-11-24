@@ -285,7 +285,7 @@ int linkedList<T>::count()
 
 template <class T>
 void linkedList<T>::del(T n) {
-	
+
 	bool isFound = false;
 	node<T> *dNode;    // node to store the node to be deleted
 	// list is empty
@@ -453,6 +453,7 @@ void linkedList<T>::addAsFirst(T data) {
 	nNode = createNode(data);
 	nNode->next = head;
 	head = nNode;
+	tail->next = head;
 }
 
 template <class T>
@@ -464,15 +465,29 @@ void linkedList<T>::addAfter(T data_in_node, T data_to_insert) {
 		std::cout << "List is empty" << std::endl;
 		wait(2);
 	}
-	while (temp != NULL) {
-		if (temp->data == data_in_node) {
+	else {
+		if (tail->data == data_in_node) {
 			nNode = createNode(data_to_insert);
-			nNode->next = temp->next;
-			temp->next = nNode;
+			nNode->next = head;
+			tail->next = nNode;
+			tail = nNode;
 			return;
-		} 
-		temp = temp->next;
+		}
+
+		else {
+			while (temp != tail) {
+				if (temp->data == data_in_node) {
+					nNode = createNode(data_to_insert);
+					nNode->next = temp->next;
+					temp->next = nNode;
+					return;
+				} 
+				temp = temp->next;
+			}
+		}
+		
 	}
+	
 
 	std::cout << "There is no node that contains " << data_in_node << std::endl;
 	wait(2);
@@ -494,7 +509,7 @@ void linkedList<T>::addBefore(T data_in_node, T data_to_insert) {
 		temp1 = head;
 		temp2 = temp1->next;
 
-		while (temp2 != NULL) {
+		while (temp2 != head) {
 		if (temp2->data == data_in_node) {
 			nNode = createNode(data_to_insert);
 			nNode->next = temp2;
@@ -521,22 +536,31 @@ void linkedList<T>::addAfterPosition(int position, T data) {
 		return;
 	}
 
-	int counter = 1;		// make it start from 1 not 0
+	else {
+		int counter = 1;		// make it start from 1 not 0
+		while (temp != tail && counter < position) {
+			temp = temp->next;
+			counter++;
+		}
+		// the node to be deleted is the last element
+		if (temp == tail && counter == position) {
+			nNode = createNode(data);
+			nNode->next = head;
+			tail->next = nNode;
+			tail = nNode;
+		}
 
-	while (temp != NULL && counter < position) {
-		temp = temp->next;
-		counter++;
-	}
-
-	if (counter < position) {		// this means that the loop quit because temp is NULL and position hasn't been found 
-		std::cout << "The list is too short. There is no position " << position << std::endl;
-		wait(2);
-		return;
-	}
-
-	nNode = createNode(data);
-	nNode->next = temp->next;
-	temp->next = nNode;	
+		else if (temp != tail) {		// this means that the loop quit because position hasn't been found 
+			nNode = createNode(data);
+			nNode->next = temp->next;
+			temp->next = nNode;	
+		}
+		// the node to be deleted is between the first and last element
+		else {
+			std::cout << "The list is too short. There is no position " << position << std::endl;
+			wait(2);
+		}
+	}	
 }
 
 template <class T>
