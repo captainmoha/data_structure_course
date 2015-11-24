@@ -26,6 +26,9 @@ class linkedList {
 		void del(T data);
 		void display();
 		int count();
+		// sort
+		// clear
+		// reverse
 		void swapTwoAdjacent(T data1, T data2);
 		~linkedList();	
 };
@@ -282,50 +285,99 @@ int linkedList<T>::count()
 
 template <class T>
 void linkedList<T>::del(T n) {
-	bool isFound = false;
-	if (head == NULL) {
-		std::cout << "No elements are in the list " << std::endl;
-		wait(2);
-	}
+	node<T> *temp, *prev, *dNode;
+  if(head == NULL)
+  {
+    std::cout << "List is empty" << std::endl;
+    return;
+  }
+  else {
+    if(head->data == n) {
+      dNode = head;
+      if (head == tail) {
+        head = tail = NULL;
+      }
 
-	else if (head->next == head && head->data == n) {
-		head = NULL;
-		std::cout << std::endl << n << " was deleted" << std::endl;
-		isFound = true;
-		wait(2);
-	}
+      else {
+        head = head->next;
+        tail->next = head;
+      }
+    }
 
-	else {
-		node<T> *temp1, *temp2;
+    else if (tail->data == n) {
+      temp = head;
+      while(temp != tail) {
+        prev = temp;
+        temp = temp->next;
+      }
+      dNode = tail;
+      tail = prev;
+      tail->next = head;
+    }
+
+    else {
+      prev = temp = head;
+      while((temp->data != n) && (temp != tail)) {
+        prev = temp;
+        temp = temp->next;
+      }
+      if (temp->data == n) {
+        dNode = temp;
+        prev->next = temp->next;
+        std::cout << "The node that contains " << temp->data << " was deleted" << std::endl;
+      }
+      else {
+        std::cout << "No node that contains " << temp->data  << " was found" << std::endl;
+        return;
+      }
+    }
+  }
+
+  delete dNode;
+	// bool isFound = false;
+	// if (head == NULL) {
+	// 	std::cout << "No elements are in the list " << std::endl;
+	// 	wait(2);
+	// }
+
+	// else if (head->next == head && head->data == n) {
+	// 	head = NULL;
+	// 	std::cout << std::endl << n << " was deleted" << std::endl;
+	// 	isFound = true;
+	// 	wait(2);
+	// }
+
+	// else {
+	// 	node<T> *temp1, *temp2;
 		
 
-		for (temp1 = head, temp2 = temp1->next; temp2 != head;  temp1 = temp1->next, temp2 = temp1->next) {
-			if (temp1->data == n) {
-				std::cout << "in if\n";
-				head = temp2;
-				tail->next = head;
-				std::cout << std::endl << n << " was deleted" << std::endl;
-				isFound = true;
-				wait(2);
-				break;
-			}
-			else if (temp2->data == n && temp2->next == head) {
-				std::cout << "in else\n";
-				temp1->next = head;
-				tail = temp1;
-				std::cout << std::endl << n << " was deleted" << std::endl;
-				isFound = true;
-				wait(2);
-				break;
-			}
+	// 	for (temp1 = head, temp2 = temp1->next; temp2 != head;  temp1 = temp1->next, temp2 = temp1->next) {
+	// 		if (temp1->data == n) {
+	// 			std::cout << "in if\n";
+	// 			head = temp2;
+	// 			tail->next = head;
+	// 			std::cout << std::endl << n << " was deleted" << std::endl;
+	// 			isFound = true;
+	// 			wait(2);
+	// 			break;
+	// 		}
+	// 		else if (temp2->data == n && temp2->next == head) {
+	// 			std::cout << "in else\n";
+	// 			temp1->next = head;
+	// 			tail = temp1;
+	// 			std::cout << std::endl << n << " was deleted" << std::endl;
+	// 			isFound = true;
+	// 			wait(2);
+	// 			break;
+	// 		}
 
-		}
-	}
+	// 	}
+	// }
 
-	if (!isFound) {
-		std::cout << "No element " << n << " exists in the list!" << std::endl;
-		wait(2);
-	}
+	// if (!isFound) {
+	// 	std::cout << "No element " << n << " exists in the list!" << std::endl;
+	// 	wait(2);
+	// }
 		
 }
 
@@ -649,10 +701,10 @@ template <class T>
 linkedList<T>::~linkedList() {
 	node<T> *temp1 = head;
 
-	while (temp1 != NULL) {
+	while (temp1 != tail) {
 		node<T> *temp2 = temp1->next;
 		delete temp1;
 		temp1 = temp2;
 	}
-	head = NULL;
+	delete tail;
 }
