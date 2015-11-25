@@ -776,6 +776,7 @@ bool linkedList<T>::search(T data) {
 		wait(2);
 	}
 
+	// the data is in the first node
 	else if (head->data == data) {
 		counter++;
 		std::cout << "Found the the node that contains " << data << " At node " << counter << std::endl;
@@ -784,19 +785,28 @@ bool linkedList<T>::search(T data) {
 	}
 
 	else {
-		node<T> *temp1 = head;
+		node<T> *temp = head;
 
-		while (temp1 != NULL) {
-			std::cout << temp1->data << std::endl;
+		while (temp != tail) {
+			// std::cout << temp->data << std::endl;
 			counter++;
-			if (temp1->data == data) {
+			if (temp->data == data) {
 				std::cout << "Found the node that contains " << data << " At node " << counter << std::endl;
 				wait(3);
 				return true;
 			}
 
-			temp1 = temp1->next;
+			temp = temp->next;
 		}
+
+		// the data is in the last node
+		if (temp == tail && temp->data == data) {
+			counter++;
+			std::cout << "Found the node that contains " << data << " At node " << counter << std::endl;
+			wait(3);
+			return true;
+		}
+
 		std::cout << "No node that contains " << data << " was found!" << std::endl;
 		wait(3);
 		return false;
