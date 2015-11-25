@@ -29,6 +29,8 @@ class linkedList {
 		// sort
 		// clear
 		// reverse
+		// swap
+		// arraytize
 		void swapTwoAdjacent(T data1, T data2);
 		~linkedList();	
 };
