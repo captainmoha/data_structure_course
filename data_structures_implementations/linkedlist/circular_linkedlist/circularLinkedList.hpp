@@ -54,11 +54,11 @@ void displayMenu() {
 	std::cout << "Enter ( p )  to add an element after a certain position." << std::endl;
 	std::cout << "Enter ( n )  to delete a certain node." << std::endl;
 	std::cout << "Enter ( > )  to delete an element after a certain element." << std::endl;
-	std::cout << "Enter ( < )  to delte an element before a certain element." << std::endl;
+	std::cout << "Enter ( < )  to delete an element before a certain element." << std::endl;
 	std::cout << "Enter ( s )  to search for an element." << std::endl;
-	std::cout << "Enter ( d ) to delete an element." << std::endl;
-	std::cout << "Enter ( c ) to count the elements." << std::endl;
-	std::cout << "Enter ( w ) to swap two adjacent elements." << std::endl;
+	std::cout << "Enter ( d )  to delete an element." << std::endl;
+	std::cout << "Enter ( c )  to count the elements." << std::endl;
+	std::cout << "Enter ( w )  to swap two adjacent elements." << std::endl;
 	std::cout << "Enter ( e )  to exit this interface." << std::endl << std::endl;
 }
 
@@ -703,6 +703,7 @@ void linkedList<T>::delBefore(T data) {
 
 	bool isFound = false;
 	node<T> *dNode;
+
 	if (head == NULL) {
 		std::cout << "List is empty! " << std::endl;
 		wait(2);
@@ -711,13 +712,13 @@ void linkedList<T>::delBefore(T data) {
 	else {
 		node<T> *prev, *temp;
 		
-
 		if (head->data == data) {
 			std::cout << "There is nothing before " << head->data << std::endl;
 			wait(2);
 			return;
 		}
 
+		// the node to be deleted is the first node (head)
 		else if (head->next->data == data) {
 			dNode = head;
 			isFound = true;
@@ -725,6 +726,7 @@ void linkedList<T>::delBefore(T data) {
 			head = head->next;
 		}
 
+		// the node to be deleted is the one before the tail
 		else if (tail->data == data) {
 			prev = NULL;
 			temp = head;
@@ -738,6 +740,7 @@ void linkedList<T>::delBefore(T data) {
 			prev->next = tail;
 		}
 
+		// the node to be deleted is between the head and the tail
 		else {
 			prev = NULL;
 			temp = head;
