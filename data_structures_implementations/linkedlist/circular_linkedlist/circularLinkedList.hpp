@@ -566,39 +566,67 @@ void linkedList<T>::addAfterPosition(int position, T data) {
 template <class T>
 void linkedList<T>::delNode(int n) {
 
+	node<T> *dNode; // node to be deleted
+	bool isFound = false;
+
 	if (head == NULL) {
 		std::cout << "List is empty!" << std::endl;
 		wait(2);
 	}
-
+	// the node to be deleted is the first one
 	else if (n == 1) {
-		head = head->next;
-		std::cout << std::endl << n << " was deleted" << std::endl;
-		
+		dNode = head;
+		isFound = true;	
+
+		// the list has more than one node
+		if (head != tail) {
+			head = head->next;
+			tail->next = head;
+		}
+		else {
+			head = tail = NULL;
+		}
 	}
 
 	else {
-		node<T> *temp1, *temp2;
-		temp1 = head;
-		temp2 = temp1->next;
+		node<T> *prev, *temp;
+		prev = head;
+		temp = prev->next;
 
 		int counter = 2;
 
-		while (counter != n && temp2 != NULL) {
-			temp1 = temp1->next;
-			temp2 = temp1->next;
+		while (counter != n && temp != head) {
+			prev = prev->next;
+			temp = prev->next;
 			counter++;
 		}
 
-		if (counter == n && temp2 != NULL) {
-			temp1->next = temp2->next;
-			std::cout << "Node number " << n << " was deleted" << std::endl;
-		}
-		else {
-			std::cout << "No node " << n << std::endl;
-			wait(2); 
+		if (counter == n && temp != head) {
+			isFound = true; 
+			// the node to be deleted is the last one
+			if (temp == tail) {
+				dNode = tail;
+				tail = prev;
+				prev->next = head;
+			}
+			// the node to be deleted is between the first and last one
+			else {
+				dNode = temp;
+				prev->next = temp->next;
+			}
 		}
 
+	}
+
+
+	if (isFound) {
+		delete dNode;
+		std::cout << std::endl << n << " was deleted" << std::endl;
+		wait(2);
+	}
+	else {
+		std::cout << "No node " << n << std::endl;
+		wait(2); 
 	}
 }
 
