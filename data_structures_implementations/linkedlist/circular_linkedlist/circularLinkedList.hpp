@@ -700,39 +700,68 @@ void linkedList<T>::delAfter(T data) {
 
 template <class T>
 void linkedList<T>::delBefore(T data) {
-	
+
+	bool isFound = false;
+	node<T> *dNode;
 	if (head == NULL) {
 		std::cout << "List is empty! " << std::endl;
 		wait(2);
 	}
 
-	else if  (head->next == NULL && head->data == data) {
-		std::cout << "No nodes exist before the node that contains " << data << std::endl;
-		wait(2); 
-	}
-
-	else if  (head->next == NULL && head->data != data) {
-		std::cout << "No node that contains " << data << " exists"<< std::endl;
-		wait(2);
-	}
-
-	else if (head->next->data == data) {
-		head = head->next;
-		return;
-	}
 	else {
-		node<T> *temp1, *temp2, *temp3;
+		node<T> *prev, *temp;
+		
 
-		for (temp1 = head, temp2 = temp1->next, temp3 = temp2->next; temp3 != NULL; temp1 = temp1->next, temp2 = temp1->next, temp3 = temp2->next) {		
-			if (temp3->data == data) {
-				temp1->next = temp3;
-				return;
+		if (head->data == data) {
+			std::cout << "There is nothing before " << head->data << std::endl;
+			wait(2);
+			return;
+		}
+
+		else if (head->next->data == data) {
+			dNode = head;
+			isFound = true;
+			tail->next = head->next;
+			head = head->next;
+		}
+
+		else if (tail->data == data) {
+			prev = NULL;
+			temp = head;
+
+			while(temp->next != tail) {
+				prev = temp;
+				temp = temp->next;
+			}
+			dNode = temp;
+			isFound = true;
+			prev->next = tail;
+		}
+
+		else {
+			prev = NULL;
+			temp = head;
+
+			while (temp->next != tail && temp->next->data != data) {
+				prev = temp;
+				temp = temp->next;
+			}
+			if (temp->next != tail && temp->next->data == data) {
+				dNode = temp;
+				isFound = true;
+				prev->next = temp->next;
 			}
 		}
 	}
-	
-	std::cout << "Couldn't delete the node before the node that contains " << data << std::endl;
-	wait(2);
+
+	if (!isFound) {
+		std::cout << "There is no node that contains " << data << std::endl;
+		wait(2);
+	}
+
+	else {
+		delete dNode;
+	}
 }
 
 template <class T>
