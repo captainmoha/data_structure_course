@@ -1,2 +1,2 @@
-# data_structure_course
+# data structure course
 Code for Data structures course in C++
