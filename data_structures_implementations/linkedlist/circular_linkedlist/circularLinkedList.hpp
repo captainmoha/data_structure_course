@@ -362,62 +362,52 @@ void linkedList<T>::del(T n) {
 
 template <class T>// this function is working!
 void linkedList<T>::swapTwoAdjacent(T data1, T data2) {
-	node<T> *temp1, *temp2, *temp3;
+	node<T> *prev, *temp;
 	
-
-	temp1 = head;
-	temp2 = temp1->next;
-
 	if (head == NULL) {
 		std::cout << "List is empty" << std::endl;
 		wait(2);
 		return;
 	}
-	else if (head->next == NULL) {
+	else if (head == tail) {
 		std::cout << "Swap not possible! List has only one node." << std::endl;
 		wait(2);
 	}
 
-	else if (temp1->data == data1 && temp2->data == data2) {      // if the nodes to swap are the first two nodes
-				head->next = temp2->next;  	// make the next of head point to the third node
-				temp2->next = head;			// make the next of the second node point to head
-				head = temp2;
-				return;				// now make the second node the head
-			}
+	// the list has only two nodes
+	else if (head->next == tail && (head->data == data1 && tail->data == data2)) {
+		
+		prev = head;
+		temp = tail;
 
-	
+		head = temp;
+		tail = prev;
+
+		head->next = tail;
+		tail->next = head;
+		return;
+	}
+
 	else {
-		node<T> *tempHolder1, *tempHolder2, *tempHolder3;  // holders for nodes in temps to make swapping easier
+		// the nodes to be swapped are the first two nodes
+		if (head->data == data1 && head->next->data == data2) {
+			prev = head;
+			temp = head->next;
 
-		// go through nodes in the list with three pointers
-		// temp1->temp2->temp3
-		// I'm using three pointers so that I always know the node before the two nodes I'm looking for
-
-		for (temp1 = head, temp2 = temp1->next, temp3 = temp2->next; temp3 != NULL; temp1 = temp1->next, temp2 = temp1->next, temp3 = temp2->next) {
-			// std::cout << "IN FOR" << std::endl;
-			
-			if (temp2->data == data1 && temp3->data == data2) { // if the two nodes are found
-
-				// these are just placeholders to make swapping easier
-
-				tempHolder1 = temp1;	// now temp1 is the node before the two nodes I want to swap
-				tempHolder2 = temp2;	// temp2 is the first node
-				tempHolder3 = temp3;	// temp3 is the second node
-
-				temp1->next = tempHolder2->next;		// make the first node point to the third node
-				temp2->next = tempHolder3->next;		// make the second node point to what's after the third node
-				temp3->next = tempHolder2;				// make the third node point to the second node
-				
-				break;
-				
-			}
-
-			else {
-				continue;
-			}
+			head = head->next;
+			prev->next = temp->next;
+			head->next = prev;
+			tail->next = head;
+			return;
 		}
 
+		else {
+			// TODO if the nodes to be swapped are the last two
+			// TODO if the nodes to be swapped are in the middle
+		}
 	}
+
+
 	std::cout << "Swap not possible! " << std::endl;
 	wait(2);
 	
