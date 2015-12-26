@@ -1,3 +1,4 @@
+
 template <class T>
 struct node
 {
@@ -26,8 +27,9 @@ class linkedList {
 		void del(T data);
 		void display();
 		int count();
+		void addIfNotThere(T data);
+		void clrRecursive();
 		// sort
-		// clear
 		// reverse
 		// swap
 		// arraytize
@@ -53,6 +55,7 @@ void displayMenu() {
 	std::cout << "Enter ( i )  to insert an element as the first element." << std::endl;
 	std::cout << "Enter ( 1 )  to add an element after a certain element." << std::endl;
 	std::cout << "Enter ( 2 )  to add an element before a certain element." << std::endl;
+	std::cout << "Enter ( 3 )  to add an element if it is not contained in the list." << std::endl;
 	std::cout << "Enter ( p )  to add an element after a certain position." << std::endl;
 	std::cout << "Enter ( n )  to delete a certain node." << std::endl;
 	std::cout << "Enter ( > )  to delete an element after a certain element." << std::endl;
@@ -61,6 +64,7 @@ void displayMenu() {
 	std::cout << "Enter ( d )  to delete an element." << std::endl;
 	std::cout << "Enter ( c )  to count the elements." << std::endl;
 	std::cout << "Enter ( w )  to swap two adjacent elements." << std::endl;
+	std::cout << "Enter ( l )  to clear the list." << std::endl;
 	std::cout << "Enter ( e )  to exit this interface." << std::endl << std::endl;
 }
 
@@ -122,6 +126,13 @@ void interface() {
 				break;
 			}
 
+			case '3': {
+				T data;
+				std::cout << "Add what ?  ";
+				std::cin >> data;
+				List.addIfNotThere(data);
+				break;
+			}
 			case 'p': {
 				T n;
 				int pos;
@@ -188,6 +199,10 @@ void interface() {
 				break;
 			}
 
+			case 'l': {
+				List.clrRecursive();
+				break;
+			}
 			case 'e': {
 				std::cout << "\033[2J\033[1;1H";
 				isDone = true;
@@ -802,6 +817,46 @@ bool linkedList<T>::search(T data) {
 		std::cout << "No node that contains " << data << " was found!" << std::endl;
 		wait(3);
 		return false;
+	}
+}
+
+template <class T>
+void linkedList<T>::addIfNotThere(T data) {
+	bool check = search(data);
+
+	if (!check) {
+		append(data);
+	}	
+
+	else {
+		std::cout << "The element already exists" << std::endl;
+		wait(2);
+	}
+}
+
+template <class T>
+void linkedList<T>::clrRecursive() {
+	node<T> *temp1 = head;
+
+
+	if (head == NULL) {
+		std::cout << "List is empty" << std::endl;
+		wait(2);
+	}
+	else if (head->next == head) {
+		delete temp1;
+		head = tail = NULL;
+		std::cout << "List was cleared" << std::endl;
+		wait(2);
+	}
+	else {
+		// std::cout << "In else" << std::endl;
+		// wait(1);
+		node<T> *temp2;
+		temp2 = temp1->next;
+		temp1->next = temp2->next;
+		delete temp2;
+		clrRecursive();
 	}
 }
 
