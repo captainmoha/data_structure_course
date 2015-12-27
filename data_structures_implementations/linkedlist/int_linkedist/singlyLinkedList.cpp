@@ -553,5 +553,5 @@ linkedList::~linkedList() {
 		delete temp1;
 		temp1 = temp2;
 	}
-	head = NULL;
+	delete head;
 }
