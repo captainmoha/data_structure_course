@@ -1,7 +1,7 @@
 #include <iostream>
 #include "stackList.hpp"
 
-
+void chooseType();
 
 int main() {
 
