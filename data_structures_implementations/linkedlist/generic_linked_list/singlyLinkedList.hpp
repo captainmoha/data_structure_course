@@ -643,38 +643,68 @@ void linkedList<T>::delAfter(T data) {
 template <class T>
 void linkedList<T>::delBefore(T data) {
 	
+	bool isFound = false;
+	node<T> *dNode;
+
 	if (head == NULL) {
 		std::cout << "List is empty! " << std::endl;
 		wait(2);
 	}
 
-	else if  (head->next == NULL && head->data == data) {
-		std::cout << "No nodes exist before the node that contains " << data << std::endl;
-		wait(2); 
+	else {
+
+		if (head->data == data) {
+			std::cout << "There is nothing before " << head->data << std::endl;
+			wait(2);
+			return;
+		}
+
+		else if (head->next->data == data) {
+			dNode = head;
+			head = head->next;
+			isFound = true;
+			return;
+		}
+		// the node to be deleted is between the head and the node last node
+		else {
+			node<T> *travBehind, *trav, * travAhead;
+
+			travBehind = NULL;
+			trav = head;
+			travAhead = head->next;
+
+			while (travAhead->next != NULL) {
+
+				if (travAhead->data == data) {
+					
+					dNode = trav;
+					travBehind->next = travAhead;
+					isFound = true;
+				}
+
+				travBehind = trav;
+				trav = trav->next;
+				travAhead = travAhead->next;
+			}
+
+			// the node to be deleted is the one before the last node
+			if (travAhead->next == NULL && travAhead->data == data) {
+				dNode = trav;
+				travBehind->next = travAhead;
+				isFound = true;
+			}
+			
+		}
 	}
 
-	else if  (head->next == NULL && head->data != data) {
-		std::cout << "No node that contains " << data << " exists"<< std::endl;
+	if (!isFound) {
+		std::cout << "There is no node that contains " << data << std::endl;
 		wait(2);
 	}
 
-	else if (head->next->data == data) {
-		head = head->next;
-		return;
-	}
 	else {
-		node<T> *temp1, *temp2, *temp3;
-
-		for (temp1 = head, temp2 = temp1->next, temp3 = temp2->next; temp3 != NULL; temp1 = temp1->next, temp2 = temp1->next, temp3 = temp2->next) {		
-			if (temp3->data == data) {
-				temp1->next = temp3;
-				return;
-			}
-		}
+		delete dNode;
 	}
-	
-	std::cout << "Couldn't delete the node before the node that contains " << data << std::endl;
-	wait(2);
 }
 
 template <class T>
