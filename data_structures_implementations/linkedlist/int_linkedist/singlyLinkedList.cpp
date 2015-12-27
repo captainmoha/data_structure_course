@@ -91,46 +91,60 @@ int linkedList::count()
 }
 
 void linkedList::del(int n) {
+
+	node *dNode;
+
 	bool isFound = false;
 	if (head == NULL) {
 		cout << "No elements are in the list " << endl;
 		wait(2);
 	}
 
-	else if (head-> next == NULL) {
-		head = NULL;
-		cout << endl << n << " was deleted" << endl;
-		isFound = true;
-		wait(2);
-		
-	}
-
 	else {
-		node *temp1, *temp2;
-		
+		// the node to be deleted is the first one and the list has only one
+		if (head->data == n && head->next == NULL) {
+			dNode = head;
+			head = NULL;
+			isFound = true;
+		}
 
-		for (temp1 = head, temp2 = temp1->next; temp2 != NULL;  temp1 = temp1->next, temp2 = temp1->next) {
-			if (temp1->data == n) {
-				
-				head = temp2;
-				cout << endl << n << " was deleted" << endl;
-				isFound = true;
-				wait(2);
-				break;
-			}
-			else if (temp2->data == n) {
-				temp1->next = temp2->next;
-				cout << endl << n << " was deleted" << endl;
-				isFound = true;
-				wait(2);
-				break;
+		// the node to be deleted is the first one and the list has multiple nodes
+		else if (head->data == n) {
+			dNode = head;
+			head = head->next;
+			isFound = true;
+		}
+
+		// the node to be deleted is after the first one
+
+		else {
+			node *trav = NULL;
+			node *travAhead = head;
+
+			while (travAhead != NULL) {
+				trav = travAhead;
+				travAhead = travAhead->next;
+
+
+				if (travAhead->data == n) {
+					dNode = travAhead;
+					trav->next = travAhead->next;
+					isFound = true;
+					break;
+				}
 			}
 		}
+
 	}
+
 
 	if (!isFound) {
 		cout << "No element " << n << " exists in the list!" << endl;
 		wait(2);
+	}
+
+	else {
+		delete dNode;
 	}	
 }
 
@@ -315,42 +329,61 @@ void linkedList::addAfterPosition(int position, int num) {
 }
 
 void linkedList::delNode(int n) {
+	node *dNode; // node to be deleted
+	bool isFound = false;
 
 	if (head == NULL) {
-		cout << "List is empty!" << endl;
+		std::cout << "List is empty!" << std::endl;
 		wait(2);
 	}
-
+	// the node to be deleted is the first one
 	else if (n == 1) {
-		head = head->next;
-		cout << endl << n << " was deleted" << endl;
-		
+		dNode = head;
+		isFound = true;	
+
+		// the list has more than one node
+		if (head->next != NULL) {
+			head = head->next;
+		}
+		else {
+			head = NULL;
+		}
 	}
 
 	else {
-		node *temp1, *temp2;
-		temp1 = head;
-		temp2 = temp1->next;
+		node *prev, *temp;
+		prev = head;
+		temp = prev->next;
 
 		int counter = 2;
 
-		while (counter != n && temp2 != NULL) {
-			temp1 = temp1->next;
-			temp2 = temp1->next;
+		while (counter != n && temp != head) {
+			prev = prev->next;
+			temp = prev->next;
 			counter++;
 		}
 
-		if (counter == n && temp2 != NULL) {
-			temp1->next = temp2->next;
-			cout << "Node number " << n << " was deleted" << endl;
-		}
-		else {
-			cout << "No node " << n << endl;
-			wait(2); 
+		if (counter == n && temp != head) {
+			
+			// the node to be deleted is after the first one
+			dNode = temp;
+			isFound = true; 
+			prev->next = temp->next;
+
 		}
 
 	}
 
+
+	if (isFound) {
+		delete dNode;
+		std::cout << std::endl << n << " was deleted" << std::endl;
+		wait(2);
+	}
+	else {
+		std::cout << "No node " << n << std::endl;
+		wait(2); 
+	}
 }
 
 void linkedList::delAfter(int num) {
