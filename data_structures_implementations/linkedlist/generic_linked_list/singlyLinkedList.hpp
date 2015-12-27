@@ -583,23 +583,61 @@ void linkedList<T>::delNode(int n) {
 template <class T>
 void linkedList<T>::delAfter(T data) {
 	
-	node<T> *temp1, *temp2;
-		
-	for (temp1 = head, temp2 = temp1->next; temp2 != NULL; temp1 = temp1->next, temp2 = temp1->next) {
-		if (temp1->data == data) {
-			temp1->next = temp2->next;
-			return;
-		}
+	node<T> *prev, *temp;
+	node<T> *dNode;
+	bool isFound = false;
+
+	if (head == NULL) {
+		std::cout << "The list is empty" << std::endl;
+		wait(2);
 	}
 
-	if (temp2 == NULL) {
-		std::cout << "There is nothing after " << temp1->data << std::endl;
+	// there is only one node in the list so there nothing after it to be deleted
+	else if (head->data == data && head->next == NULL) {
+		std::cout << "There is nothing after " << data << std::endl;
+		wait(2);
+		return;
 	}
+
+	// node to be deleted is the one after head
+	else if (head->data == data && head->next != NULL) {
+		dNode = head->next;
+		head->next = head->next->next;
+		isFound = true;
+	}
+
 	else {
-		std::cout << "No node that contains " << data << " was found " << std::endl;
+
+		node<T> *trav = head;
+
+		while (trav != NULL) {
+			trav = trav->next;
+			// if the node is the last node then there is nothing after it to be deleted
+			if (trav->next == NULL) {
+				std::cout << "There is nothing after " << data << std::endl;
+				wait(2);
+				return;
+			}
+
+			else if (trav->data == data) {
+				dNode = trav->next;
+				trav->next = trav->next->next;
+				isFound = true;
+				break;
+			}
+		}
+
 	}
-	
-	wait(2);  
+
+			
+	if (!isFound) {
+		std::cout << "No node that contains " << data << " was found " << std::endl;
+		wait(2);  
+	}
+
+	else {
+		delete dNode;
+	}	
 }
 
 template <class T>
