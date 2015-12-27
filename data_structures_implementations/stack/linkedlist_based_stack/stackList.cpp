@@ -17,7 +17,7 @@ void chooseType() {
 	std::cout << "********************************************************************************************************"<< std::endl << std::endl;
 	std::cout << "****************************Welcome to the LinkedList-based Stack interface!****************************"<< std::endl << std::endl;
 	std::cout << "********************************************************************************************************"<< std::endl << std::endl;
-	std::cout << "Please choose the data type you want the linkedList to handle \n";
+	std::cout << "Please choose the data type you want the Stack to handle \n";
 	std::cout << "Enter ( i ) to use integers.\n";
 	std::cout << "Enter ( f ) to use floats.\n";
 	std::cout << "Enter ( d ) to use doubles.\n";

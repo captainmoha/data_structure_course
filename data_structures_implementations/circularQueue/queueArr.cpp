@@ -1,5 +1,5 @@
 #include <iostream>
-#include "stackArr.hpp"
+#include "queue.hpp"
 
 void chooseType();
 int getCapcity();
@@ -17,9 +17,9 @@ void chooseType() {
 
 	std::cout << "\033[2J\033[1;1H";
 	std::cout << "*******************************************************************************************************"<< std::endl << std::endl;
-	std::cout << "******************************Welcome to the Array-based Stack interface!******************************"<< std::endl << std::endl;
+	std::cout << "******************************Welcome to the Array-based Queue interface!******************************"<< std::endl << std::endl;
 	std::cout << "*******************************************************************************************************"<< std::endl << std::endl;
-	std::cout << "Please choose the data type you want the Stack to handle \n";
+	std::cout << "Please choose the data type you want the Queue to handle \n";
 	std::cout << "Enter ( i ) to use integers.\n";
 	std::cout << "Enter ( f ) to use floats.\n";
 	std::cout << "Enter ( d ) to use doubles.\n";
@@ -71,7 +71,7 @@ int getCapcity() {
 	int capacity = 0;
 
 	do {
-		std::cout << "Please Enter the size of the stack: ";
+		std::cout << "Please Enter the size of the queue: ";
 		std::cin >> capacity;
 	} while (capacity <= 0);
 
