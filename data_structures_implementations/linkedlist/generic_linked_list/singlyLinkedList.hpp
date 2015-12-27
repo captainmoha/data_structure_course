@@ -281,47 +281,60 @@ int linkedList<T>::count()
 
 template <class T>
 void linkedList<T>::del(T n) {
+	node<T> *dNode;
+
 	bool isFound = false;
 	if (head == NULL) {
 		std::cout << "No elements are in the list " << std::endl;
 		wait(2);
 	}
 
-	else if (head-> next == NULL) {
-		head = NULL;
-		std::cout << std::endl << n << " was deleted" << std::endl;
-		isFound = true;
-		wait(2);	
-	}
-
 	else {
-		node<T> *temp1, *temp2;
-		
-
-		for (temp1 = head, temp2 = temp1->next; temp2 != NULL;  temp1 = temp1->next, temp2 = temp1->next) {
-			if (temp1->data == n) {
-				
-				head = temp2;
-				std::cout << std::endl << n << " was deleted" << std::endl;
-				isFound = true;
-				wait(2);
-				break;
-			}
-			else if (temp2->data == n) {
-				temp1->next = temp2->next;
-				std::cout << std::endl << n << " was deleted" << std::endl;
-				isFound = true;
-				wait(2);
-				break;
-			}
-
+		// the node to be deleted is the first one and the list has only one
+		if (head->data == n && head->next == NULL) {
+			dNode = head;
+			head = NULL;
+			isFound = true;
 		}
+
+		// the node to be deleted is the first one and the list has multiple nodes
+		else if (head->data == n) {
+			dNode = head;
+			head = head->next;
+			isFound = true;
+		}
+
+		// the node to be deleted is after the first one
+
+		else {
+			node<T> *trav = NULL;
+			node<T> *travAhead = head;
+
+			while (travAhead->next != NULL) {
+				trav = travAhead;
+				travAhead = travAhead->next;
+
+
+				if (travAhead->data == n) {
+					dNode = travAhead;
+					trav->next = travAhead->next;
+					isFound = true;
+					break;
+				}
+			}
+		}
+
 	}
+
 
 	if (!isFound) {
 		std::cout << "No element " << n << " exists in the list!" << std::endl;
 		wait(2);
 	}
+
+	else {
+		delete dNode;
+	}	
 		
 }
 
@@ -650,5 +663,5 @@ linkedList<T>::~linkedList() {
 		delete temp1;
 		temp1 = temp2;
 	}
-	head = NULL;
+	delete head;
 }

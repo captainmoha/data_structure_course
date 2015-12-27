@@ -869,5 +869,6 @@ linkedList<T>::~linkedList() {
 		delete temp1;
 		temp1 = temp2;
 	}
+	delete head;
 	delete tail;
 }

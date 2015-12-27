@@ -121,7 +121,8 @@ void linkedList::del(int n) {
 			node *trav = NULL;
 			node *travAhead = head;
 
-			while (travAhead != NULL) {
+			while (travAhead->next != NULL) {
+				cout << travAhead << endl;
 				trav = travAhead;
 				travAhead = travAhead->next;
 
