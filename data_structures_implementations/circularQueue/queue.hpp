@@ -108,14 +108,35 @@ CircQueue<T>::CircQueue(int size) {
 template <class T>
 void CircQueue<T>::display() {
 
+	
+
 	if (front == -1) {
 		std::cout << "Nothing added yet ¯\\_(ツ)_/¯";
 	}
 
 	else {
-		for (int i = front; i <= rear; i++) {
-			std::cout << arr[i] << " ";
+
+		if (front <= rear) {
+
+			for (int i = front; i <= rear; i++) {
+				std::cout << arr[i] << " ";
+			}
 		}
+
+		else {
+			int frontPos = front;
+
+			for (int i = frontPos; i <= max - 1; i++) {
+				std::cout << arr[i] << " ";
+			}
+
+			frontPos = 0;
+
+			for (int i = frontPos; i <= rear; i++) {
+				std::cout << arr[i] << " ";
+			}
+		}
+		
 	}
 
 	std::cout << std::endl;
@@ -124,13 +145,14 @@ void CircQueue<T>::display() {
 
 template <class T>
 void CircQueue<T>::enqueue(T data) {
+
 	if ((front == 0 && rear == (max - 1)) || ((rear+1) == front)) {
 		std::cout << "Queue is full" << std::endl;
 		wait(2);
-
-	}
+		}
 
 	else {
+
 		if (rear == (max-1)) {
 			rear = 0;
 		}
@@ -145,6 +167,9 @@ void CircQueue<T>::enqueue(T data) {
 	if (front == -1) {
 		front = 0;
 	}
+
+	// std::cout << "front: " << front << " rear: " << rear << std::endl;
+	// wait(2);
 }
 
 template <class T>

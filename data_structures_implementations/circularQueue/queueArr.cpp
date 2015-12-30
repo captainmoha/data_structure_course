@@ -5,7 +5,7 @@ void chooseType();
 int getCapcity();
 
 int main() {
-
+	
 	chooseType();
 
 	return 0;
